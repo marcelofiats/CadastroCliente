@@ -23,7 +23,6 @@ Route::group(array('prefix'=> 'users'), function(){
     Route::put('/delete', [UserController::class, 'delete']);
     Route::get('/transactions', [TransactionController::class, 'getByClient']);
     Route::get('/alter_balance', [UserController::class, 'alterBalance']);
-    Route::get('/movements', [UserController::class, 'movements']);
 });
 
 Route::group(array('prefix'=> 'transactions'), function(){

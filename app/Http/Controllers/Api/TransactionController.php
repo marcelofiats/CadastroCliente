@@ -108,11 +108,6 @@ class TransactionController extends Controller
             $filtros['period'] = $request->period;
         }
 
-        $teste =new TransactionExport($idClient, $filtros);
-
-        return $teste->collection();
-            
-
         $fileName = 'extract_cliente_'.$idClient.'.xlsx';
 
         return Excel::download(new TransactionExport($idClient, $filtros), $fileName);
