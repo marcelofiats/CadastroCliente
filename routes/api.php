@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\TransactionController;
+use App\Http\Controllers\Api\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(array('prefix'=> 'users'), function(){
+    Route::post('/create', [UserController::class, 'create']);
+    Route::get('/get_all', [UserController::class, 'getAll']);
+    Route::get('/get', [UserController::class, 'getById']);
+    Route::put('/delete', [UserController::class, 'delete']);
+    Route::get('/transactions', [TransactionController::class, 'getByClient']);
+    Route::get('/alter_balance', [UserController::class, 'alterBalance']);
+    Route::get('/movements', [UserController::class, 'movements']);
 });
+
+Route::group(array('prefix'=> 'transactions'), function(){
+    Route::post('/create', [TransactionController::class, 'create']);
+    Route::get('/get', [TransactionController::class, 'getById']);
+    Route::put('/cancel', [TransactionController::class, 'cancel']);
+    Route::get('/extract', [TransactionController::class, 'extract']);
+    Route::get('/balance', [TransactionController::class, 'balance']);
+});
+
