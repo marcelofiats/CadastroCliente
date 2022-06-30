@@ -6,6 +6,8 @@ Laravel 8.83.17
 Mysql 5.7.33
 PHP 8^
 
+para acessar as rotas foi uttilizado o Postman.
+
 foi utilizado apenas uma biblioteca para download de arquivos em csv.
 
 maatwebsite/excel, já inserida no composer.json
@@ -89,6 +91,8 @@ pode ser utilizado 3 tipos de filtros
 >mês de referencia enviando &period=22-06 na url após o id do cliente
 
 Rota metódo GET url_base/transactions/extract?id_cliente&period_days=30&period=22-06
+
+**obs:para download deve se acessar a rota pelo navegador, pois o postman não faz downlaod.
 
 **obs: caso o filtro period for enviado junto com o period_days, period_days será desconsiderado na busca,
 e só efetuará o filtro do period.
