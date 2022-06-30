@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
-use Illuminate\Http\File;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Exports\TransactionExport;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\TransactionRequest;
-use DateTime;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class TransactionController extends Controller
 {
@@ -20,6 +16,13 @@ class TransactionController extends Controller
     {
         
         $transaction = new Transaction();
+        $user        = new User();
+
+        $objUser = $user->where('id', $request->id_client)->get();
+
+        if (count($objUser) < 1) {
+            return response()->json(['status'=>'error', 'message'=>'cliente nao encontrado'], 401);
+        }
 
         $transaction->create($request->all());
 
@@ -73,13 +76,13 @@ class TransactionController extends Controller
 
     public function cancel(Request $request) 
     {
-        if ( !isset($request->id_cliente) || !isset($request->id)) {
+        if ( !isset($request->id_client) || !isset($request->id)) {
             return response()->json(['status'=>'error', 'message'=>'informacoes insuficientes'], 401);
         }
 
         $transaction = new Transaction();
         $objTransactionClient = $transaction->where('id', $request->id)
-                                            ->where('id_client', $request->id_cliente)->get();
+                                            ->where('id_client', $request->id_client)->get();
 
         if (count($objTransactionClient) < 1) {
             return response()->json(['status'=>'error', 'message'=>'transacao nao encontrada'], 401);

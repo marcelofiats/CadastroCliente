@@ -28,49 +28,49 @@ em caso de ações será retornadop um array com o status success, e message;
 >>Endpoint's Clientes
 
 >Cadastro 
-Rota metódo POST, url_base/users/create
+Rota metódo POST, url_base/api/users/create
 enviar no body json com as seguintes informações
-[
-    'name': 'Marcos exemplo', type=string
-    'email': 'exemplo@exemplo.com.br', type=string
-    'birthday': '1999-02-01', type=string
-]
+{
+    "name": "Marcos exemplo", //string
+    "email": "exemplo@exemplo.com.br", //string
+    "birthday": "1999-02-01", //string
+}
 
 >Buscar Todos
-Rota metódo GET url_base/users/get_all
+Rota metódo GET url_base/api/users/get_all
 
 retornara todos os clientes cadastrados
 
 >Buscar Cliente por id
-Rota metódo GET url_base/users/get?id={{ id_cliente }}
+Rota metódo GET url_base/api/users/get?id={{ id_cliente }}
 
 Retorna o cliente escolhido.
 
 >Deletar
 
-Rota metódo PUT url_base/users/delete?id={{ id_cliente }}
+Rota metódo PUT url_base/api/users/delete?id={{ id_cliente }}
 
 caso o cliente tenha transações não será possivel deleta-lo.
 
 >Transações do Cliente
-Rota metódo GET url_base/users/transactions?id_client={{ id_cliente }}
+Rota metódo GET url_base/api/users/transactions?id_client={{ id_cliente }}
 
 retorno por order decrescente as transações do cliente escolhido
 
 >Alterar Saldo Inicial
-Rota metódo GET url_base/users/alter_balance?id_cliente={{ id_cliente }}&value={{ novo valor }}
+Rota metódo GET url_base/api/users/alter_balance?id_cliente={{ id_cliente }}&value={{ novo valor }}
 
 
 >> Transações
 
 >Criar nova Transação 
-Rota metódo POST url_base/transactions/create
+Rota metódo POST url_base/api/transactions/create
 enviar json no body da requisição com os seguinteas dados
-[
-    'id_client': 2, type=int
-    'type': 'tipo' type=enum
-    'amount': '123.3' type=double
-]
+{
+    "id_client": 1, //int
+    "type": "credito", //num
+    "amount": 129.90 //float
+}
 
 tipo: deve seguir os três modelos disponiveis.
 credito,
@@ -78,10 +78,10 @@ debito,
 estorno
 
 >Recuperar pelo id
-Rota metódo GET url_base/transactions/get?id={{ id_transacao }}
+Rota metódo GET url_base/api/transactions/get?id={{ id_transacao }}
 
 >Cancelar
-Rota metódo PUT url/transactions/cancel?id={{ id_transacao }}
+Rota metódo PUT url/api/transactions/cancel?id={{ id_transacao }}&id_client={{ id_cliente }}
 
 >Extrato
 gera um arquivo do tipo csv com as transações do cliente,
@@ -90,7 +90,7 @@ pode ser utilizado 3 tipos de filtros
 >dos ultimos 30 dias enviando &period_days=30 na url após o id do cliente
 >mês de referencia enviando &period=22-06 na url após o id do cliente
 
-Rota metódo GET url_base/transactions/extract?id_cliente&period_days=30&period=22-06
+Rota metódo GET url_base/api/transactions/extract?id_cliente&period_days=30&period=22-06
 
 **obs:para download deve se acessar a rota pelo navegador, pois o postman não faz downlaod.
 
@@ -99,4 +99,4 @@ e só efetuará o filtro do period.
 
 >Balanço
 nesta rota você tem acesso a somatória de transações realizadas pelo cliente.
-Rota metódo GET url_base/transactions/balance?id={{ id_cliente }}
+Rota metódo GET url_base/api/transactions/balance?id={{ id_cliente }}

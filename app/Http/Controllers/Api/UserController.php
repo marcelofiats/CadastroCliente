@@ -55,17 +55,13 @@ class UserController extends Controller
     public function delete(Request $request) 
     {
         $user = new User();
-        $transaction = new Transaction();
 
         if ( !isset($request->id)) {
             return response()->json(['status'=>'error', 'message'=>'id do cliente nao informado'], 401);
         }
-        $objTransaction = $transaction->where('id_client', $request->id)->get();
 
-        return $objTransaction;
-
-        if (!empty(Transaction::where('id_client', $request->id)->get())) {
-            return response()->json(['status'=>'error', 'message'=>'cliente não pode ser excluido, conta trasacao'], 401);
+        if (count(Transaction::where('id_client', $request->id)->get()) > 0) {
+            return response()->json(['status'=>'error', 'message'=>'cliente não pode ser excluido, consta trasacao'], 401);
         }
 
         $objUser = $user->where('id',$request->id)->get();
